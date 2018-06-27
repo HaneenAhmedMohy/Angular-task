@@ -12,20 +12,17 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { AppComponent } from './app.component';
 import { ItemsComponent } from './items/items.component';
-import { HomeComponent } from './home/home.component';
 
 import { QueryService } from './query.service';
 
 const routes: Routes=[
-  {path:'' , component :HomeComponent },
-  {path:'items' , component :ItemsComponent},
+  {path:'' , component :ItemsComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     ItemsComponent,
-    HomeComponent
   ],
   imports: [
   	NgbModule.forRoot(),
