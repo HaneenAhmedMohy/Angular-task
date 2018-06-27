@@ -1,0 +1,31 @@
+.row.my-5{
+	justify-content: space-between;
+}
+input{
+	text-align: right;
+}
+.fas.fa-trash-alt{
+	color:red;
+	font-size: 16px;
+}
+.fas.fa-edit{
+	color:#28a745;
+	font-size: 16px;
+}
+.modal-header{
+	padding-left: 300px;
+	background-color:#28a745 ;
+	color: white;
+}
+.modal-header.update{
+	padding-left: 360px;
+}
+pagination-controls{
+    text-align: center;
+}
+.my-pagination /deep/ .ngx-pagination .current {
+    background: #28a745;
+}
+thead tr,th{
+	background-color: lightgrey;
+}
