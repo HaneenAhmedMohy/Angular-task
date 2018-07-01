@@ -6,7 +6,7 @@ import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angul
 import { Observable , of } from 'rxjs';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable({
@@ -22,13 +22,9 @@ export class QueryService {
   ) {}
 
   getData(path:string): Observable<any>{
-  	return this.http.get(path)
+  	return this.http.get(path);
   }
 
-  deleteItemById(ItemId: number): Observable<any> {
-	let cpHeaders = new Headers({ 'Content-Type': 'application/json' });
-	let options = new RequestOptions({ headers: cpHeaders });
-	return this.http.delete(this.ItemsUrl +"/"+ ItemId)
-    }
+   
 
 }

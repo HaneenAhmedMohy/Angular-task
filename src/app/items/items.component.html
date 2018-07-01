@@ -1,60 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		  <a class="navbar-brand" href="#">Logo</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+		      <li class="nav-item active">
+		        <a class="nav-link" href="#">الاصناف<span class="sr-only">(current)</span></a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">الفواتير</a>
+		      </li>
+		    </ul>
+		  </div> 
+	</div>
+</nav>	
+
 <div class="container">
 	<div class="row my-5">
 		<div class="col-6-lg">
-			<button class="btn btn-success" type="submit" (click)="open(content)">اضافة</button>
+			<button class="btn btn-success px-5" type="submit" (click)="open(content)">اضافة</button>
 		</div>
 		<div>
-        	<input type="text" [(ngModel)]="term" placeholder="...بحث"> 
+        	<input type="text" [(ngModel)]="term" class="px-4" placeholder="...بحث"> 
     	</div> 
 	</div>
 	<div class="row">
 		<div class="col-12-lg table-responsive">
-			<table class="table table-bordered text-center">
-			 	<thead>
-				    <tr>
-				    	<th scope="col" class="font-weight-bold">الخيارات</th>
-					    <th scope="col" class="font-weight-bold">انتهاء الصلاحية</th>
-					    <th scope="col" class="font-weight-bold">صورة المنتج</th>
-					    <th scope="col" class="font-weight-bold">السعر</th>
-					    <th scope="col" class="font-weight-bold">الاسم</th>
-					    <th scope="col" class="font-weight-bold">م</th>
-				    </tr>
-			  	</thead>
-			  	<tbody>
-				    <tr *ngFor="let item of ItemsDetails |filter:term | paginate: { itemsPerPage: 8, currentPage: p} ">
-					    <td> <i class="fas fa-trash-alt mx-3" (click)="deleteItem(item.ItemId)" ></i><i class="fas fa-edit mx-3" (click)="open(Edit)"></i></td>
-					    <td>{{item.ExpireDate}}</td>
-					    <td>{{item.Photo}}</td>
-					    <td>{{item.Price}}</td>
-					    <td>{{item.ItemName}}</td>
-					    <th scope="row">{{item.ItemId}}</th>
-					    <ng-template #Edit let-c="close" let-d="dismiss">
-							<div class="modal-header ml-auto update">
-							    <h4 class="modal-title">تعديل</h4>
-							    <button type="button" class="close ml-5" aria-label="Close" (click)="d('Cross click')">
-							      	<span aria-hidden="true" class="text-white ">&times;</span>
-							    </button>  
-							</div>  
-							<div class="modal-body text-center my-5">
-							      	<form name="updateItemForm" #updateItemForm="ngForm" (ngSubmit)="updateItem(updateItemForm)">
-							      		<label>م</label>
-								  		<input class="form-control bg-transparent mb-4 text-right" type="number" name="ItemId" [(ngModel)]="updateData.ItemId" placeholder={{item.ItemId}}  />
-							      		<label>الاسم</label>
-								  		<input class="form-control bg-transparent mb-4 text-right" type="text" name="ItemName" [(ngModel)]="updateData.ItemName"  required placeholder={{item.ItemName}}  />
-								  		<label>السعر</label>
-								  		<input class="form-control bg-transparent mb-4 text-right"  type="number" value="1" min="0" step="1" name="Price" [(ngModel)]="updateData.Price" required placeholder={{item.Price}} />
-								  		<label>الصورة</label>
-								  		<input class="form-control bg-transparent mb-4 text-right" accept="image/png, image/jpeg" type="file" name="ItemPhoto" [(ngModel)]="updateData.Photo" required />
-								  		<label>تاريخ انتهاء الصلاحية</label>
-								  		<input class="form-control bg-transparent mb-4 text-right" type="date" name="ExpireDate" [(ngModel)]="updateData.ExpireDate"  required placeholder={{item.Price}}/>
-								  		<button aria-label="Close" (click)="d('Cross click')" type="button" class="btn btn-danger px-5 mx-3">الغاء</button>
-								  		<button [disabled]="!updateItemForm.valid" class="btn btn-success px-5 mx-3">تاكيد</button>
-								 	</form>
-							</div>
-						</ng-template>
-				    </tr>	    
-			  	</tbody>
-			</table>
+			<div class="panel panel-default">
+				<table class="table table-bordered text-center rounded">
+				 	<thead>
+					    <tr>
+					    	<th scope="col" class="font-weight-bold rounded">الخيارات</th>
+						    <th scope="col" class="font-weight-bold">انتهاء الصلاحية</th>
+						    <th scope="col" class="font-weight-bold">صورة المنتج</th>
+						    <th scope="col" class="font-weight-bold">السعر</th>
+						    <th scope="col" class="font-weight-bold">الاسم</th>
+						    <th scope="col" class="font-weight-bold rounded">م</th>
+					    </tr>
+				  	</thead>
+				  	<tbody>
+					    <tr *ngFor="let item of ItemsDetails |filter:term | paginate: { itemsPerPage: 8, currentPage: p} ">
+						    <td> <i class="fas fa-trash-alt mx-3" (click)="deleteItem(item.ItemId)" ></i><i class="fas fa-edit mx-3" (click)="open(Edit)"></i></td>
+						    <td>{{item.ExpireDate}}</td>
+						    <td><img src="{{item.Photo}}" /></td>
+						    <td>{{item.Price}}</td>
+						    <td>{{item.ItemName}}</td>
+						    <th scope="row">{{item.ItemId}}</th>
+						    <ng-template #Edit let-c="close" let-d="dismiss">
+								<div class="modal-header ml-auto update">
+								    <h4 class="modal-title">تعديل</h4>
+								    <button type="button" class="close ml-5" aria-label="Close" (click)="d('Cross click')">
+								      	<span aria-hidden="true" class="text-white ">&times;</span>
+								    </button>  
+								</div>  
+								<div class="modal-body text-center my-5">
+								      	<form name="updateItemForm" #updateItemForm="ngForm" (ngSubmit)="updateItem(item.ItemId,updateItemForm)">
+								      		<label>م</label>
+									  		<input class="form-control bg-transparent mb-4 text-right" type="number" name="ItemId" [(ngModel)]="updateData.ItemId" placeholder={{item.ItemId}}  />
+								      		<label>الاسم</label>
+									  		<input class="form-control bg-transparent mb-4 text-right" type="text" name="ItemName" [(ngModel)]="updateData.ItemName"  required placeholder={{item.ItemName}}  />
+									  		<label>السعر</label>
+									  		<input class="form-control bg-transparent mb-4 text-right"  type="number" value="1" min="0" step="1" name="Price" [(ngModel)]="updateData.Price" required placeholder={{item.Price}} />
+									  		<label>الصورة</label>
+									  		<input class="form-control bg-transparent mb-4 text-right" accept="image/png, image/jpeg" type="file" name="ItemPhoto" [(ngModel)]="updateData.Photo" required />
+									  		<label>تاريخ انتهاء الصلاحية</label>
+									  		<input class="form-control bg-transparent mb-4 text-right" type="date" name="ExpireDate" [(ngModel)]="updateData.ExpireDate"  required placeholder={{item.Price}}/>
+									  		<button aria-label="Close" (click)="d('Cross click')" type="button" class="btn btn-danger px-5 mx-3">الغاء</button>
+									  		<button [disabled]="!updateItemForm.valid" class="btn btn-success px-5 mx-3">تاكيد</button>
+									 	</form>
+								</div>
+							</ng-template>
+					    </tr>	    
+				  	</tbody>
+				</table>
+			</div>	
 		</div>
 	</div>
 	<pagination-controls class="my-pagination" previousLabel="السابق" nextLabel="التالى"(pageChange)="p = $event"></pagination-controls>

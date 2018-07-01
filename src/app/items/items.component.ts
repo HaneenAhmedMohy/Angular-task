@@ -9,7 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'text/plain'
+    'Content-Type': 'application/json'
   })
 };
 
@@ -19,7 +19,8 @@ const httpOptions = {
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
-  
+  imageUrl: string = "/assets/img/default-image.png";
+  fileToUpload: File = null;
   items: string[]; 
   closeResult: string;
   ItemsDetails: Array<object>;
@@ -28,15 +29,15 @@ export class ItemsComponent implements OnInit {
   searchResult : object;
 
   constructor( 
-  	private modalService: NgbModal ,
-  	private q:QueryService,
+    private modalService: NgbModal ,
+    private q:QueryService,
     private http: HttpClient
    ) { this.ItemsDetails=[];
-  		this.getItems();
+      this.getItems();
       this.dataForm={};
       this.updateData={};
       this.searchResult ={};
-  	}
+    }
 
   open(content:any) {
     this.modalService.open(content).result.then((result) => {
@@ -55,67 +56,57 @@ export class ItemsComponent implements OnInit {
     }
   }
 
-	getItems():void{
-		let path:string='http://task.taj-it.com/api/Items';
-		this.q.getData(path).subscribe(
-			res => {
-				this.ItemsDetails=res;
-			},
-			err => {
-				console.log(err);
-			},
-			() => {}
-		);
-	}
+  getItems():void{
+    let path:string='http://task.taj-it.com/api/Items';
+    this.q.getData(path).subscribe(
+      res => {
+        this.ItemsDetails=res;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {}
+    );
+  }
 
-  deleteItem(ItemId: number) {
-    if(confirm("Are you sure to delete")) {
-      for(let i = 0; i < this.ItemsDetails.length; i++){
-          if (this.ItemsDetails[i].ItemId === ItemId) {
-              this.ItemsDetails.splice(i,1);
-              alert("Item is deleted");
-          }
-      }
-      this.q.deleteItemById(ItemId).subscribe(successCode => {         
-              alert("Item is deleted");
+  deleteItem(ItemId) {
+      this.http.delete('http://task.taj-it.com/api/Items'+'/'+ItemId,ItemId).subscribe(successCode => {
+          alert("Item is deleted");
+          location.reload();
       },err => {
            console.log(err);
         },
         () => {}       
-      };
+      );
   }
    
    
   addNewItem(data: NgForm):void{
-    //console.log(data)
     if(!data.valid){
       console.log("error");
     }else{
       //var x = JSON.stringify(this.dataForm); 
-       alert("Item successfully added");
-      //this.ItemsDetails.push(this.dataForm);
-      this.http.post('http://task.taj-it.com/api/Items', data.value).subscribe(res => { 
+      this.http.post('http://task.taj-it.com/api/Items', this.dataForm ).subscribe(res => { 
         this.ItemsDetails.push(this.dataForm);
         alert("Item successfully added");
+
       });
     }
   }
 
-  updateItem(data: NgForm):void{
-    console.log(data)
+  updateItem(ItemId , data: NgForm):void{
     if(!data.valid){
       console.log("error");
     }else{
-      //var y = JSON.stringify(this.updateData);
-      //console.log(y);
-      //console.log(this.updateData.ItemId);
-      alert("Item successfully updated");
-      this.http.put('http://task.taj-it.com/api/Items'+'/'+this.updateData.ItemId).subscribe(res => {
-        //console.log(res);
+      this.http.put('http://task.taj-it.com/api/Items'+"/"+ItemId,this.updateData).subscribe(res => {
+        alert("Item successfully updated");
+        location.reload();
       });
     }
   }
 
    ngOnInit() {
   }
+
+   
 }

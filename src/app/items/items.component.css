@@ -26,6 +26,11 @@ pagination-controls{
 .my-pagination /deep/ .ngx-pagination .current {
     background: #28a745;
 }
-thead tr,th{
-	background-color: lightgrey;
+th.font-weight-bold{
+	background-color: lightblue;
 }
+table{
+	border-collapse: separate;
+}
+
+
