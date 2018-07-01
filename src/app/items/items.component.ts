@@ -19,7 +19,7 @@ const httpOptions = {
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
-  imageUrl: string = "/assets/img/default-image.png";
+  imageUrl: string = "/assets/placeholder.png";
   fileToUpload: File = null;
   items: string[]; 
   closeResult: string;
@@ -70,14 +70,20 @@ export class ItemsComponent implements OnInit {
   }
 
   deleteItem(ItemId) {
-      this.http.delete('http://task.taj-it.com/api/Items'+'/'+ItemId,ItemId).subscribe(successCode => {
+      var r = confirm("هل تريد حذف هذا الصنف ؟");
+      if (r == true) {
+       this.http.delete('http://task.taj-it.com/api/Items'+'/'+ItemId,ItemId).subscribe(successCode => {
           alert("Item is deleted");
           location.reload();
       },err => {
            console.log(err);
         },
         () => {}       
-      );
+      ); 
+    } else {
+
+    }
+      
   }
    
    
@@ -103,6 +109,25 @@ export class ItemsComponent implements OnInit {
         location.reload();
       });
     }
+  }
+
+  handleFileInput(file: FileList) {
+    this.fileToUpload = file.item(0);
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageUrl = event.target.result;
+    }
+    reader.readAsDataURL(this.fileToUpload);
+  }
+
+  OnSubmit(Image){
+   this.q.postFile(this.fileToUpload).subscribe(
+     data =>{
+       console.log('done');
+       Image.value = null;
+       this.imageUrl = "/assets/placeholder.png";
+     }
+   );
   }
 
    ngOnInit() {

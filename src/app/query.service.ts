@@ -25,6 +25,12 @@ export class QueryService {
   	return this.http.get(path);
   }
 
-   
+  postFile(fileToUpload: File) {
+    const endpoint = 'http://task.taj-it.com/api/UploadImage';
+    const formData: FormData = new FormData();
+    formData.append('Image', fileToUpload, fileToUpload.name);
+    return this.http
+      .post(endpoint, formData);
+  }
 
 }
