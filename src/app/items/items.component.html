@@ -29,22 +29,24 @@
 	<div class="row">
 		<div class="col-12-lg table-responsive">
 			<div class="panel panel-default">
-				<table class="table table-bordered text-center rounded">
-				 	<thead>
+				<table class="table text-center table-sm">
+				 	<thead class="thead-dark">
 					    <tr>
-					    	<th scope="col" class="font-weight-bold rounded">الخيارات</th>
+					    	<th scope="col" class="font-weight-bold ">الخيارات</th>
 						    <th scope="col" class="font-weight-bold">انتهاء الصلاحية</th>
 						    <th scope="col" class="font-weight-bold">صورة المنتج</th>
 						    <th scope="col" class="font-weight-bold">السعر</th>
 						    <th scope="col" class="font-weight-bold">الاسم</th>
-						    <th scope="col" class="font-weight-bold rounded">م</th>
+						    <th scope="col" class="font-weight-bold ">م</th>
 					    </tr>
 				  	</thead>
 				  	<tbody>
 					    <tr *ngFor="let item of ItemsDetails |filter:term | paginate: { itemsPerPage: 8, currentPage: p} ">
-						    <td> <i class="fas fa-trash-alt mx-3" (click)="deleteItem(item.ItemId)" ></i><i class="fas fa-edit mx-3" (click)="open(Edit)"></i></td>
+						    <td> <fa name="trash" class="mx-3" (click)="deleteItem(item.ItemId)" style="color:red;font-size:1.3rem" ></fa>
+						    	<fa name="edit" class="mx-3" (click)="open(Edit)" style="color:#28a745;font-size:1.3rem"></fa>
+						    </td>
 						    <td>{{item.ExpireDate | date: 'dd/MM/yyyy'}}</td>
-						    <td><img src="{{item.Photo}}" /></td>
+						    <td><img id="ImageOfItem" src="{{item.Photo}}" style="width:50px;height:50px" /></td>
 						    <td>{{item.Price}}</td>
 						    <td>{{item.ItemName}}</td>
 						    <th scope="row">{{item.ItemId}}</th>
@@ -68,7 +70,7 @@
 									  		<form #imageForm=ngForm (ngSubmit)="OnSubmit(Image)">
 										        <img [src]="imageUrl"  style="width:250px;height:200px">
 										        <input type="file" #Image accept="image/png, image/jpeg" name="ItemPhoto"  [(ngModel)]="dataForm.Photo"(change)="handleFileInput($event.target.files)">
-										        <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
+										        <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">حفظ</button>
 										     </form>
 									  		<label>تاريخ انتهاء الصلاحية</label>
 									  		<input class="form-control bg-transparent mb-4 text-right" type="date" name="ExpireDate" [(ngModel)]="updateData.ExpireDate"  required placeholder={{item.Price}}/>
@@ -114,7 +116,7 @@
 		  		<form #imageForm=ngForm (ngSubmit)="OnSubmit(Image)">
 					<img [src]="imageUrl"  style="width:250px;height:200px">
 					<input type="file" #Image accept="image/png, image/jpeg" name="ItemPhoto"  [(ngModel)]="dataForm.Photo"(change)="handleFileInput($event.target.files)">
-					<button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">Submit</button>
+					<button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">حفظ</button>
 				</form>
 		  		<label>تاريخ انتهاء الصلاحية</label>
 		  		<input class="form-control bg-transparent mb-4 text-right" type="date" name="ExpireDate" [(ngModel)]="dataForm.ExpireDate"  required #ExpireDate="ngModel"/>

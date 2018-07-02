@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 import { AppComponent } from './app.component';
@@ -33,7 +34,8 @@ const routes: Routes=[
     HttpModule,
     ReactiveFormsModule,
     NgxPaginationModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    AngularFontAwesomeModule
   ],
   providers: [QueryService],
   bootstrap: [AppComponent]
